@@ -1,3 +1,0 @@
-# doazeok
-the first
-yeach!
