@@ -14,7 +14,7 @@ ko.applyBindings(viewModel);
  function del (x) {   
       x.parentNode.parentNode.removeChild(x.parentNode);
 };
-// ............... Удалятельная кнопка
+// ............... Удалятельная кнопка в заказе
 
 function checChange () {
       var dis = document.getElementById("dis");
@@ -26,7 +26,9 @@ function checChange () {
 // ...............Чекбокс
 
 var Btn = document.getElementById("Btn");
+
 Btn.addEventListener("click", function () {
+  
   var a = {val: viewModel.goods()};
   var b = {val: viewModel.amount()};
   var c = viewModel.delivery();
@@ -37,51 +39,48 @@ Btn.addEventListener("click", function () {
   var div;
 
 ////////////////////////////// проверка полей 
-var checkCond = function (inp) {
+  var checkCond = function (inp) {
 
-    var srt; 
-    var conditions = true;
-    var conditionsNumb = true; //отсутствие цифр
-    var conditionsWord = true;
+      var srt; 
+      var conditions = true;
+      var conditionsNumb = true; //отсутствие цифр
+      var conditionsWord = true; //отсутствие букв
 
-    (function () {
-        srt = inp.val.split("");
-    })();
+      (function () {
+          srt = inp.val.split("");
+      })();
 
-    if (!srt.length){
-      conditions = false};
+      if (!srt.length){
+        conditions = false};
+
+      srt.forEach(function(item, i, srt) {
+          if ( +srt[i] > -1)
+          conditionsNumb = false;
+      }
+      );
+    
+      srt.forEach(function(item, i, srt) {
+          if (!( +srt[i] > -1))
+          conditionsWord = false;
+      }
+      );
 
 
-
-    srt.forEach(function(item, i, srt) {
-        if ( +srt[i] > -1)
-        conditionsNumb = false;
-    }
-    );
-    srt.forEach(function(item, i, srt) {
-        if (!( +srt[i] > -1))
-        conditionsWord = false;
-    }
-    );
-
-
-    if(conditions & conditionsNumb) {
-      inp.con =  1 //'numb nyety'
-    }else if(conditions & conditionsWord){
-      inp.con =  2 //'word nyety'
-    }else if(conditions){
-      inp.con = 3 //'smeshannaya stroka'
-    }else{
-      inp.con = 4 //'stroky nety'
-    };
-};
-checkCond(a);checkCond(b);checkCond(d);checkCond(e);checkCond(f);checkCond(g);
-// console.log(a.con);console.log(b.con);
-// console.log(d.con);console.log(e.con);
-// console.log(f.con);console.log(g.con);
+      if(conditions & conditionsNumb) {
+        inp.con =  1 //'numb nyety'
+      }else if(conditions & conditionsWord){
+        inp.con =  2 //'word nyety'
+      }else if(conditions){
+        inp.con = 3 //'smeshannaya stroka'
+      }else{
+        inp.con = 4 //'stroky nety'
+      };
+  };
+  
+  checkCond(a);checkCond(b);checkCond(d);checkCond(e);checkCond(f);checkCond(g); 
 ////////////////////////////// проверка полей 
 
-
+ 
   var conditionsUnDil =  (a.con !== 4)
   &&  (b.con !== 4 && b.con !== 3 && b.con !== 1) 
   &&  (d.con !== 4 && d.con !== 3 && d.con !== 2)  
@@ -92,178 +91,177 @@ checkCond(a);checkCond(b);checkCond(d);checkCond(e);checkCond(f);checkCond(g);
   &&  (g.con !== 4 && g.con !== 3 && g.con !== 1)  ;
 
 
-if (!c) {
+  if (!c) {
 
-  if (conditionsUnDil) {
-    ok();
+    if (conditionsUnDil) {
+      ok();
+    } else {
+      nook()
+    }
+
   } else {
-    nook()
-  }
 
-} else {
+    if (conditionsUnDil & conditionsDil) {
+      okk();
+    } else {
+      nook()
+    }
 
-  if (conditionsUnDil & conditionsDil) {
-    okk();
-  } else {
-    nook()
-  }
+  };
 
-};
+  function ok () {
+    div = document.createElement('div');
+    div.className = "alert alert-success";
 
-function ok () {
-  div = document.createElement('div');
-  div.className = "alert alert-success";
-
-  div.innerHTML =   
-                    '<button  onclick="del(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-                   '<br>'+
-                    '<div class="container-fluid">'+
-
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Товар: </p>'+
-                        '</div>'+
-
-                        '<div class="col-xs-4">'+
-
-
-                          '<p>'+a.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Количество: </p>'+
-                        '</div>'+
-
-                        '<div class="col-xs-4">'+
-                          '<p>' +(b.val? b.val: 1)+ '</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>'+(c ? "С доставкой": "Без доставки")+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Страна: </p>'+
-                        '</div>'+
-
-                        '<div class="col-xs-4">'+
-                          '<p>'+d.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Город: </p>'+
-                        '</div>'+
-
-                        '<div class="col-xs-4">'+
-                          '<p>'+e.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-
-
-                      '</div>' ;
-
-
-
-  basket.appendChild(div);
-};
-
-function okk () {
-  div = document.createElement('div');
-  div.className = "alert alert-success";
-
-  div.innerHTML =
-                    '<button  onclick="del(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-                    
+    div.innerHTML =   
+                      '<button  onclick="del(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+                     '<br>'+
                       '<div class="container-fluid">'+
 
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Товар: </p>'+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Товар: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+
+                            '<p>'+a.val+'</p>'+
+                          '</div>'+
                         '</div>'+
 
-                        '<div class="col-xs-4">'+
-                          '<p>'+a.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Количество: </p>'+
+                          '</div>'+
 
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Количество: </p>'+
-                        '</div>'+
-
-                        '<div class="col-xs-4">'+
-                          '<p>' +(b.val? b.val: 1)+ '</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>'+(c ? "С доставкой": "Без доставки")+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Страна: </p>'+
+                          '<div class="col-xs-4">'+
+                            '<p>' +(b.val? b.val: 1)+ '</p>'+
+                          '</div>'+
                         '</div>'+
 
-                        '<div class="col-xs-4">'+
-                          '<p>'+d.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Город: </p>'+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>'+(c ? "С доставкой": "Без доставки")+'</p>'+
+                          '</div>'+
                         '</div>'+
 
-                        '<div class="col-xs-4">'+
-                          '<p>'+e.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Дом: </p>'+
-                        '</div>'+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Страна: </p>'+
+                          '</div>'+
 
-                        '<div class="col-xs-4">'+
-                          '<p>'+f.val+'</p>'+
-                        '</div>'+
-                      '</div>'+
-                      
-                      '<div class="row">'+
-                        '<div class="col-xs-7">'+
-                          '<p>Квартира: </p>'+
+                          '<div class="col-xs-4">'+
+                            '<p>'+d.val+'</p>'+
+                          '</div>'+
                         '</div>'+
 
-                        '<div class="col-xs-4">'+
-                          '<p>'+g.val+'</p>'+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Город: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+e.val+'</p>'+
+                          '</div>'+
                         '</div>'+
-                      '</div>'+
+
+                        '</div>' ;
 
 
-                      '</div>' ;
 
-  basket.appendChild(div);
-};
+    basket.appendChild(div);
+  };//без доставки
 
-function nook () {
- var error = document.createElement('div'); 
-  error.innerHTML +='<div id="error" class="alert alert-danger" role="alert">Заполните все поля правильно!</div>' 
-  basket.appendChild(error);
+  function okk () {
+    div = document.createElement('div');
+    div.className = "alert alert-success";
 
-  setTimeout(function() {
-    error.parentNode.removeChild(error);}, 1000);
-};
+    div.innerHTML =
+                      '<button  onclick="del(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+
+                        '<div class="container-fluid">'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Товар: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+a.val+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Количество: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>' +(b.val? b.val: 1)+ '</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>'+(c ? "С доставкой": "Без доставки")+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Страна: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+d.val+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Город: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+e.val+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Дом: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+f.val+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xs-7">'+
+                            '<p>Квартира: </p>'+
+                          '</div>'+
+
+                          '<div class="col-xs-4">'+
+                            '<p>'+g.val+'</p>'+
+                          '</div>'+
+                        '</div>'+
+
+                        '</div>' ;
+
+    basket.appendChild(div);
+  };//с доставкой
+
+  function nook () {
+   var error = document.createElement('div'); 
+    error.innerHTML +='<div id="error" class="alert alert-danger" role="alert">Заполните все поля правильно!</div>' 
+    basket.appendChild(error);
+
+    setTimeout(function() {
+      error.parentNode.removeChild(error);
+    }, 
+               1000);
+  };//ошибка
 
 
 });
