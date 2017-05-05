@@ -104,8 +104,6 @@ ko.applyBindings(viewModel);
 viewModel.errors = ko.validation.group(viewModel);
 ////////////////////////////////////////////////////////KO
 
-//+тире в странах-городах-домах, названия с большой буквы, 
-
 // ...........................Чекбокс
   function checChange () {
         var dis = document.getElementById("dis");
