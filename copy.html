@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+<head>  
+<html lang="ru">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"></script> <!-- KO -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/knockout.validation/2.0.3/knockout.validation.min.js"></script> <!-- KO.valid -->
+
+    <link rel="stylesheet" type="text/css" href="copy.css">
+</head>
+<body>
+
+<div class="container main" 
+    >
+<div class="header">
+        <h1>Ювелирная Лавка</h1>
+        <p>Драгоценные и полудрагоценные камни</p>
+      </div>
+
+
+
+
+  <div class="row">
+
+<div class="col-xs-5 inputs">
+
+<label>
+                   <!-- optionsCaption: 'Choose...' -->
+<select class="form-control" 
+        data-bind="
+                  options: products,
+                  optionsText: 'name',
+                  value: goods,
+                  optionsCaption: 'Choose...'
+                  ">
+</select>
+<p>Товар: 
+<!-- <span data-bind="text: typeof listofppl() !== 'undefined' ? listofppl().firstName : 'No chosen'"> -->
+<!-- ko if: goods--> 
+<span data-bind="text: goods().name"> </span> 
+<!-- /ko -->
+
+
+
+<!-- <span data-bind="text: goods().name"> --> </p>
+</label>
+
+<!--................... Товар -->
+
+<!--................... Количество -->
+<div class="form-group">
+  <div class="row"><div class='col-xs-4'>
+    <label>
+      <input 
+      class="form-control"
+      data-bind="value: amount, valueUpdate: 'input'" 
+      />
+     <!-- placeholder="1"  -->
+      <p>Кол-во: <span data-bind="text: amount"></span> </p>
+    </label>
+  </div></div>
+</div>
+<!--................... Количество -->
+
+
+<!--................... Чекбокс -->
+<div class="checkbox" onchange="checChange()">
+  <label>
+    <input type="checkbox"  data-bind="checked: delivery">Доставка
+  </label>
+</div>
+  <!--................... Чекбокс -->
+
+
+
+
+
+<!--................... Адрес -->
+    <div class="form-group">
+
+    <label>
+      <input type="text" id="disabledTextInput" class="form-control"
+      data-bind="value: country"
+      placeholder="Страна">
+      <p for="disabledTextInput" data-bind="text: country"></p>
+      </label>
+    </div>
+
+        <div class="form-group">
+    <label>
+      <input type="text" id="disabledTextInput" class="form-control"
+      data-bind="value: city"
+      placeholder="Город">
+      <p for="disabledTextInput" data-bind="text: city"></p>
+      </label>
+    </div>
+
+<fieldset disabled id='dis'>
+
+     <div class="form-group">
+    <label>
+      <input type="text" id="disabledTextInput" class="form-control"
+      data-bind="value: house"
+      placeholder="Дом">
+      <p for="disabledTextInput" data-bind="text: house"></p>
+      </label>
+    </div>
+
+     <div class="form-group">
+    <label>
+      <input type="text" id="disabledTextInput" class="form-control"
+      data-bind="value: apartment"
+      placeholder="Квартира">
+      <p for="disabledTextInput" data-bind="text: apartment"></p>
+      </label>
+    </div>
+
+</fieldset>
+<!--................... Адрес -->
+
+
+<!--................... Субмит -->
+<button data-bind= 'click: submit' type="submit" class="btn btn-default">Отправить</button>
+<!--................... Субмит -->
+
+</div> <!-- col-xs-7 -->
+      
+<div class="clearfix visible-xs-block"></div>
+      
+
+<!--............................ корзина -->
+    <div class="col-sm-5 col-md-offset-1 "
+         data-bind="foreach: list" id="basket">
+      <div class="alert alert-success">
+
+        <button data-bind="click: $parent.remove" type="button"
+                class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button><br><!-- X -->
+
+
+        <div class="container-fluid" >
+            <div class="row" >
+
+                <div class="col-xs-7" >
+                  <p >Товар: </p>
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.goods.name"></p>
+                </div>
+            </div>
+            <div class="row" >
+
+                <div class="col-xs-7">
+                  <p >Количество: </p>
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.amount"></p>
+                </div>
+                
+            </div>
+            <div class="row" >
+
+                <div class="col-xs-7">
+                  <p >Страна: </p>
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.country"></p>
+                </div>
+
+            </div>
+            <div class="row" >
+
+                <div class="col-xs-7">
+                  <p >Город: </p>
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.city"></p>
+                </div>
+
+            </div>
+            <div class="row" >
+
+            </div>
+            <div class="row" >
+
+                <div class="col-xs-12">
+                  <p data-bind="text: check ? 'С доставкой' : 'Без доставки'"></p>
+                </div>
+
+            </div>
+            <div class="row" >
+
+            </div>
+            <div class="row" >
+                <div class="col-xs-7">
+                <!-- ko if: check--> 
+                  <p >Дом: </p>
+                <!-- /ko -->
+
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.house"></p>
+                </div>
+
+            </div>
+            <div class="row" >
+
+            </div>
+            <div class="row" >
+
+                <div class="col-xs-7">
+                <!-- ko if: check--> 
+                  <p >Квартира: </p>
+                <!-- /ko -->
+
+                </div>
+
+                <div class="col-xs-5">
+                  <p data-bind="text: $data.apartment"></p>
+                </div>
+
+            </div>
+
+            </div><!--row-->
+         </div>  <!-- container-fluid -->
+      </div><!-- alert alert-success -->
+    </div><!-- col-sm-5 col-md-offset-1 -->
+<!-- ............................ корзина  -->
+
+  </div> <!--  row  -->
+</div> <!-- container -->
+
+
+
+<footer class="footer">
+      
+    </footer>
+
+
+    <script src='copy.js'></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
+
+
+
