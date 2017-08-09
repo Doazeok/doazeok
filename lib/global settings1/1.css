@@ -1,0 +1,9 @@
+body{
+background-attachment: fixed;
+background-color: #000058;
+background-image: url(1.png);
+background-repeat: repeat ;
+background-position: center top;
+      color: #000000;
+      text-shadow: 2px 2px #FF0000;
+}
