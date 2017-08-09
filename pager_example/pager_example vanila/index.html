@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pager.js example</title>
+    </head>
+    <!-- display none у body нужен, чтобы пока нокаут не заинитился, страница бы не показывалась -->
+    <!-- здесь это не критично, на на больших сайтах некрасиво когда сайт кусками неопрятными появляется -->
+    <body style="display:none;" data-bind="visible: true">
+
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a data-bind="page-href: '/main'">Главная</a></li>
+                <li><a data-bind="page-href: '/publications'">Публикации</a></li>
+            </ul>
+        </nav>
+
+        <br>
+
+        <!-- Index -->
+        <div data-bind="
+            page: {
+                id: 'main',
+                title: 'Pager.js example | Главная',
+                source: 'pages/main.html'
+            }">
+
+        </div>
+
+        <!-- Publications -->
+        <div data-bind="
+            page: {
+                id: 'publications',
+                title: 'Pager.js example | Новости',
+                source: 'pages/publications.html'
+            }">
+        </div>
+
+        <!-- Libs -->
+        <script type='text/javascript' src="lib/jquery.min.js"></script>
+        <script type='text/javascript' src="lib/knockout-3.4.2.min.js"></script>
+        <script type='text/javascript' src='lib/pager.min.js'></script>
+        <!-- Main -->
+        <script type='text/javascript' src="index.js"></script>
+    </body>
+</html>
